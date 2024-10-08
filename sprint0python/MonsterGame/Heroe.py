@@ -1,9 +1,9 @@
 class Heroe:
-    def __init__(self, nombre, ataque, defensa):
+    def __init__(self, nombre, ataque, defensa,salud):
         self.nombre = nombre
         self.ataque = ataque
         self.defensa = defensa
-        self.salud = 100  # Salud actual
+        self.salud = salud # Salud actual
         self.salud_maxima = 100  # Salud máxima
         self.defensa_temporal = 0  # Defensa aumentada temporalmente
 
