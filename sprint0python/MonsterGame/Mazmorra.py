@@ -7,30 +7,27 @@ from Tesoro import Tesoro
 class Mazmorra:
     def __init__(self, heroe):
         self.heroe = heroe
-        self.monstruos = []  # Lista de monstruos en la mazmorra
+        self.monstruos = [
+            Monstruo("Goblin", 8, 3, 30),
+            Monstruo("Orco", 12, 6, 40),
+            Monstruo("Dragón", 15, 8, 60)
+        ]  # Lista de monstruos en la mazmorra
         self.tesoro = Tesoro()  # Instancia de la clase Tesoro
-        self.crear_monstruos()
 
-    def crear_monstruos(self):
-        # Crear algunos monstruos (puedes ajustar los nombres y atributos)
-        self.monstruos.append(Monstruo("Orco", ataque=15, defensa=5))
-        self.monstruos.append(Monstruo("Esqueleto", ataque=10, defensa=3))
-        self.monstruos.append(Monstruo("Dragón", ataque=20, defensa=10))
 
     def jugar(self):
         print("Héroe entra en la mazmorra.")
-        while self.monstruos and self.heroe.esta_vivo():
-            enemigo = self.monstruos.pop(0)  # Sacar el primer monstruo de la lista
-            print(f"Te has encontrado con un {enemigo.nombre}.")
-            self.enfrentar_enemigo(enemigo)
+        for monstruo in self.monstruos:
+            print(f"Te has encontrado con un {monstruo.nombre}.")
+            self.enfrentar_enemigo(monstruo)
+            if not self.heroe.esta_vivo():
+                print("Héroe ha sido derrotado en la mazmorra.")
+                return
 
-        if self.heroe.esta_vivo():
-            print(f"¡{self.heroe.nombre} ha derrotado a todos los monstruos y ha conquistado la mazmorra!")
-        else:
-            print("Héroe ha sido derrotado en la mazmorra.")
+        print(f"¡{self.heroe.nombre} ha derrotado a todos los monstruos y ha conquistado la mazmorra!")
 
     def enfrentar_enemigo(self, enemigo):
-        while enemigo.salud > 0 and self.heroe.esta_vivo():
+        while enemigo.esta_vivo() > 0 and self.heroe.esta_vivo():
             print("¿Qué deseas hacer?")
             print("1. Atacar")
             print("2. Defender")

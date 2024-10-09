@@ -1,7 +1,7 @@
 import random
 
 class Tesoro:
-    def __init__(self,beneficios):
+    def __init__(self):
         self.beneficios =[
             "aumento de ataque",
             "aumento de defensa",
