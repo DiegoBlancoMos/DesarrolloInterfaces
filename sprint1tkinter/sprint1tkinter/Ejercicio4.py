@@ -36,9 +36,4 @@ check_musica=tk.Checkbutton(root,text="MÚSICA",variable=var_musica,command=actu
 check_musica.pack()
 
 
-
-
-
-
-
 root.mainloop()
