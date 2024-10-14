@@ -1,18 +1,21 @@
 import tkinter as tk
 
 def actualizar_fondo():
-    if var_radio.get() == "Rojo":
+    color_seleccionado = var_color.get()
+
+    if color_seleccionado == "Rojo":
         root.config(bg="red")
-    elif var_radio.get() == "Azul":
-        root.config(bg="blue")
-    else:
+    elif color_seleccionado == "Verde":
         root.config(bg="green")
+    elif color_seleccionado == "Azul":
+        root.config(bg="blue")
 
 root = tk.Tk()
 root.title("Ejercicio 5")
 root.geometry("300x200")
 
-var_color = tk.StringVar(value="")
+var_color = tk.StringVar()
+var_color.set(None)
 
 radio_rojo = tk.Radiobutton(root, text="Rojo", variable=var_color, value="Rojo", command=actualizar_fondo)
 radio_rojo.pack()
