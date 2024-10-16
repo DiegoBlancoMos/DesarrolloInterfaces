@@ -3,6 +3,7 @@ import tkinter as tk
 def dibujar_formas():
     # Obtener las coordenadas y el tamaño del círculo y el rectángulo
     try:
+        #INTRODUCIMOS LAS COORDENADAS DEL CIRCULO Y DEL RECTÁNGULO EN VARIABLES
         x_circulo = int(entry_x_circulo.get())
         y_circulo = int(entry_y_circulo.get())
         radio = int(entry_radio.get())

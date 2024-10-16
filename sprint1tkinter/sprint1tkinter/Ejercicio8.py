@@ -7,7 +7,8 @@ def mostrar_contenido():
 def borrar_contenido():
     entry.delete(0, tk.END)
     etiqueta_mostrada.config(text="")
-    
+
+#CREAMOS LA VENTANA PRINCIPAL
 root = tk.Tk()
 root.title("Ejercicio 8")
 root.geometry("400x250")

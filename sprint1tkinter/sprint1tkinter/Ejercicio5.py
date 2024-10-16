@@ -14,9 +14,11 @@ root = tk.Tk()
 root.title("Ejercicio 5")
 root.geometry("300x200")
 
+#CREAMOS LA VARIABLE QUE CAMBIARÁ DE VALOR DEPENDIENDO DE LA SELECCIÓN DEL USUARIO
 var_color = tk.StringVar()
 var_color.set(None)
 
+#CREAMOS EL RADIOBUTTON
 radio_rojo = tk.Radiobutton(root, text="Rojo", variable=var_color, value="Rojo", command=actualizar_fondo)
 radio_rojo.pack()
 
@@ -26,15 +28,5 @@ radio_verde.pack()
 radio_azul = tk.Radiobutton(root, text="Azul", variable=var_color, value="Azul", command=actualizar_fondo)
 radio_azul.pack()
 
-
-
-
-
-
-
-
-
-
-
-
+#INICIAMOS EL BUCLE PRINCIPAL
 root.mainloop()
