@@ -1,6 +1,10 @@
 import tkinter as tk
 
 
+# vista.py
+
+import tkinter as tk
+
 class MainMenu:
     def __init__(self, root, start_game_callback, show_stats_callback, quit_callback):
         # Guarda la referencia a la ventana principal
