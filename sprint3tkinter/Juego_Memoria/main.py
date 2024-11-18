@@ -7,7 +7,7 @@ from controlador import GameController
 def main():
     root = tk.Tk()
     root.title("Juego de Memoria")
-    root.geometry("300x300")
+    root.geometry("400x400")
 
     # Crea una instancia del controlador principal
     game_controller = GameController(root)
