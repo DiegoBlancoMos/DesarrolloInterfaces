@@ -46,16 +46,16 @@ class GameModel:
         def load_images_thread():
 
             # Descargar la imagen oculta
-            self.hidden_image = descargar_imagen(url_base + "oculta.png", (45, 45))
+            self.hidden_image = descargar_imagen(url_base + "oculta.png", (43, 43))
             '''           # Descargar cada imagen única
                        for image_id in range(32):
                            image_url = url_base + "img" + str(image_id) + ".png"
-                           self.images[image_id] = descargar_imagen(image_url, (45, 45))'''
+                           self.images[image_id] = descargar_imagen(image_url, (43, 43))'''
             # Carga imágenes para cada identificador de carta en el tablero
             unique_ids = set(id for row in self.board for id in row)  # Identificadores únicos de cartas
             for image_id in unique_ids:
                 image_url = f"{url_base}img{image_id-1}.png"
-                self.images[image_id] = recursos.descargar_imagen(image_url, (45, 45))
+                self.images[image_id] = recursos.descargar_imagen(image_url, (43, 43))
             # Marcar que las imágenes se han cargado
             self.images_loaded.set()
 

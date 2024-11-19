@@ -13,13 +13,13 @@ class MainMenu:
         #Botones del menú principal
 
         self.opcion_jugar = tk.Button(self.root, text="Jugar")
-        self.opcion_jugar.pack(pady=5)
+        self.opcion_jugar.pack(pady=10)
 
         self.opcion_estadisticas = tk.Button(self.root, text="Estadísticas")
-        self.opcion_estadisticas.pack(pady=5)
+        self.opcion_estadisticas.pack(pady=10)
 
         self.opcion_salir = tk.Button(self.root, text="Salir")
-        self.opcion_salir.pack(pady=5)
+        self.opcion_salir.pack(pady=10)
 
 
         self.timer_label = tk.Label(self.root, text="Tiempo: 0")
