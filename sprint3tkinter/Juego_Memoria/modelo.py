@@ -56,7 +56,6 @@ class GameModel:
             for image_id in unique_ids:
                 image_url = f"{url_base}img{image_id-1}.png"
                 self.images[image_id] = recursos.descargar_imagen(image_url, (45, 45))
-            print(self.board)
             # Marcar que las imágenes se han cargado
             self.images_loaded.set()
 

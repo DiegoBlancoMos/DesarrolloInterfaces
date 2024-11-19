@@ -6,3 +6,5 @@ diego,facil,8,28
 diego,medio,15,47
 diego,facil,5,25
 diego,facil,5,24
+diego,facil,10,48
+diego,facil,15,54

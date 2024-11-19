@@ -128,11 +128,8 @@ class GameController:
     def create_game_board(self):
         if not self.modelo.images_loaded.is_set():
             # Si las imágenes no están cargadas, no creamos el tablero.
-            self.root.after(100, self.create_game_board)
+            self.root.after(45, self.create_game_board)
             return
-
-        print("Tablero creado con dificultad:", self.difficulty)
-
         if self.board_frame:
             self.board_frame.destroy()
 
@@ -186,7 +183,7 @@ class GameController:
             # Si las dos cartas seleccionadas son iguales
             if card1_id == card2_id:
                 self.npares += 1
-                if self.difficulty == "facil" and self.npares == 4:
+                if self.difficulty == "facil" and self.npares == 8:
                     messagebox.showinfo("Enhorabuena!", "¡Has completado el nivel fácil!")
                     self.game_over()
                 elif self.difficulty == "medio" and self.npares == 18:
@@ -206,7 +203,7 @@ class GameController:
     def on_card_click(self, row, col):
         # Lógica cuando se hace clic en una carta
         card_id = self.modelo.board[row][col]  # Obtener el ID de la carta según su fila y columna
-        print(f"Carta {card_id} clickeada en la posición ({row}, {col})")
+        print(f"Carta {card_id} clickada en la posición ({row}, {col})")
 
         # Evitar seleccionar la misma carta dos veces
         if len(self.selected) < 2:
@@ -236,7 +233,7 @@ class GameController:
         def check_images_loaded():
             if self.modelo.images_loaded.is_set():
                 self.loading_window.destroy()
-                self.create_game_board()  # Llamar a la función para crear el tablero
+                self.create_game_board()  # Crear el tablero
             else:
                 self.vista.root.after(100, check_images_loaded)
 

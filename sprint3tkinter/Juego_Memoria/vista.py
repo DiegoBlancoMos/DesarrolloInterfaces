@@ -5,12 +5,12 @@ from tkinter import simpledialog
 
 class MainMenu:
 
-    #Inicializamos la ventana principal
+    #Ventana principal
 
     def __init__(self, root):
         self.root = root
 
-        # Creareamos ahora los botones del menú principal
+        #Botones del menú principal
 
         self.opcion_jugar = tk.Button(self.root, text="Jugar")
         self.opcion_jugar.pack(pady=5)
