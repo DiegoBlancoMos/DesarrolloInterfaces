@@ -12,7 +12,7 @@ def descargar_imagen(url, size):
         # Abrir la imagen desde el flujo de bytes y redimensionarla
         imagen_bytes = io.BytesIO(response.content)
         imagen = Image.open(imagen_bytes)
-        imagen = imagen.resize(size, Image.LANCZOS)  # Redimensionar con alta calidad
+        imagen = imagen.resize(size, Image.LANCZOS)  # Redimensionar
 
         # Convertir la imagen en un formato compatible con Tkinter
         imagen_tk = ImageTk.PhotoImage(imagen)

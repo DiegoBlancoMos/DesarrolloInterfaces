@@ -1,0 +1,8 @@
+aa,facil,6,21
+fran,facil,8,23
+diego,facil,6,30
+Diego,facil,6,52
+diego,facil,8,28
+diego,medio,15,47
+diego,facil,5,25
+diego,facil,5,24
