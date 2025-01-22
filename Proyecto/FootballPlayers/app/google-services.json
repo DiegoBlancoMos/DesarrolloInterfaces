@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "297649996853",
+    "firebase_url": "https://proyectodiegoblanco-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "proyectodiegoblanco",
+    "storage_bucket": "proyectodiegoblanco.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297649996853:android:411bda102f5f0a73a1dd7c",
+        "android_client_info": {
+          "package_name": "com.example.footballplayers"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDi-Em6K1lQtMs-BNYfz1cHzC7xvj2WSno"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
