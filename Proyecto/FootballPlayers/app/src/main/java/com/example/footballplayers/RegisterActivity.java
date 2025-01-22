@@ -1,6 +1,7 @@
 package com.example.footballplayers;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,11 +13,14 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class RegisterActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+    private EditText nameInput, emailInput, passwordInput, confirmPasswordInput, phoneInput, addressInput;
 
-    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,38 +30,36 @@ public class RegisterActivity extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         // Inicializar vistas
-        EditText nameInput = findViewById(R.id.nameInput);
-        EditText emailInput = findViewById(R.id.emailInput);
-        EditText passwordInput = findViewById(R.id.passwordInput);
-        EditText confirmPasswordInput = findViewById(R.id.confirmPasswordInput);
-        EditText phoneInput = findViewById(R.id.phoneInput);
-        EditText addressInput = findViewById(R.id.addressInput);
-        Button registerButton = findViewById(R.id.registerButton);
+        nameInput = findViewById(R.id.nameInput);
+        emailInput = findViewById(R.id.emailInput);
+        passwordInput = findViewById(R.id.passwordInput);
+        confirmPasswordInput = findViewById(R.id.confirmPasswordInput);
+        phoneInput = findViewById(R.id.phoneInput);
+        addressInput = findViewById(R.id.addressInput);
 
-        registerButton.setOnClickListener(v -> {
+        findViewById(R.id.registerButton).setOnClickListener(v -> {
             if (validateInputs()) {
                 registerUser();
             }
         });
     }
 
-
     private boolean validateInputs() {
-        // Validación de campos
         String password = passwordInput.getText().toString();
         String confirmPassword = confirmPasswordInput.getText().toString();
 
-        if (!password.equals(confirmPassword)) {
-            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
-            return false;
-        }
-
-        // Validar que ningún campo esté vacío
         if (nameInput.getText().toString().isEmpty() ||
                 emailInput.getText().toString().isEmpty() ||
+                password.isEmpty() ||
+                confirmPassword.isEmpty() ||
                 phoneInput.getText().toString().isEmpty() ||
                 addressInput.getText().toString().isEmpty()) {
             Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (!password.equals(confirmPassword)) {
+            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -71,8 +73,7 @@ public class RegisterActivity extends AppCompatActivity {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        saveUserData(user.getUid());
+                        saveUserData(mAuth.getCurrentUser().getUid());
                     } else {
                         Toast.makeText(RegisterActivity.this, "Error en el registro: " +
                                 task.getException().getMessage(), Toast.LENGTH_SHORT).show();
@@ -81,14 +82,13 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     private void saveUserData(String userId) {
-        User user = new User(
-                nameInput.getText().toString(),
-                emailInput.getText().toString(),
-                phoneInput.getText().toString(),
-                addressInput.getText().toString()
-        );
+        Map<String, Object> userData = new HashMap<>();
+        userData.put("name", nameInput.getText().toString());
+        userData.put("email", emailInput.getText().toString());
+        userData.put("phone", phoneInput.getText().toString());
+        userData.put("address", addressInput.getText().toString());
 
-        mDatabase.child("users").child(userId).setValue(user)
+        mDatabase.child("users").child(userId).setValue(userData)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
