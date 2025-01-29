@@ -1,4 +1,4 @@
-package com.example.footballplayers;
+package com.example.footballplayers.views;
 
 import static androidx.core.content.ContextCompat.startActivity;
 
@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.footballplayers.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -70,7 +71,6 @@ public class DashboardActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-                Toast.makeText(DashboardActivity.this, "Error al cargar datos", Toast.LENGTH_SHORT).show();
             }
         });
     }
