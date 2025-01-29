@@ -22,6 +22,7 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+        dataBinding = true
     }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -47,5 +48,9 @@ dependencies {
     implementation 'com.squareup.picasso:picasso:2.71828'
     implementation libs.glide
     annotationProcessor 'com.github.bumptech.glide:compiler:4.15.1'
+    implementation (libs.lifecycle.extensions)
+    implementation (libs.lifecycle.livedata.ktx)
+    implementation (libs.lifecycle.viewmodel.ktx)
+    implementation ("androidx.recyclerview:recyclerview:1.4.0")
 
 }
