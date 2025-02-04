@@ -1,33 +1,29 @@
 package com.example.footballplayers.views;
 
-import static androidx.core.content.ContextCompat.startActivity;
-
-import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.footballplayers.R;
+import com.example.footballplayers.adapters.PlayerAdapter;
+import com.example.footballplayers.models.Player;
+import com.example.footballplayers.viewmodels.DashboardViewModel;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.bumptech.glide.Glide;
-import java.util.Random;
+
+import java.util.ArrayList;
 
 public class DashboardActivity extends AppCompatActivity {
+
+    private RecyclerView recyclerView;
+    private PlayerAdapter playerAdapter;
+    private DashboardViewModel viewModel;
     private FirebaseAuth mAuth;
-    private ImageView itemImageView;
-    private TextView titleTextView, descriptionTextView;
+    private Button logoutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,43 +31,42 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         mAuth = FirebaseAuth.getInstance();
-        itemImageView = findViewById(R.id.itemImage);
-        titleTextView = findViewById(R.id.titleText);
-        descriptionTextView = findViewById(R.id.descriptionText);
-        Button logoutButton = findViewById(R.id.logoutButton);
+        recyclerView = findViewById(R.id.recyclerView);
+        logoutButton = findViewById(R.id.logoutButton);
 
-        // Configurar botón de logout
+        // Configurar RecyclerView
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        // Crear el adaptador una sola vez
+        playerAdapter = new PlayerAdapter(new ArrayList<>(), this::openDetailActivity);
+        recyclerView.setAdapter(playerAdapter);
+
+        // Configurar ViewModel
+        viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
+
+        // Observar cambios y actualizar el adaptador existente
+        viewModel.getPlayers().observe(this, players -> {
+            if (players != null) {
+                playerAdapter.updatePlayers(players);
+            }
+        });
+
+        // Cargar los datos
+        viewModel.fetchPlayers();
+
+        // Configurar logout
         logoutButton.setOnClickListener(v -> {
             mAuth.signOut();
-            Intent intent = new Intent(DashboardActivity.this, LoginActivity.class);
-            startActivity(intent);
+            startActivity(new Intent(DashboardActivity.this, LoginActivity.class));
             finish();
         });
+    }
 
-        //Creamos para que seleccione al azar uno de los 10 con ramdom.
-        final int totalItems = 10;
-        Random  random = new Random();
-        int randomIndex  = random.nextInt(totalItems);
-        // Obtener el único elemento desde Firebase
-        DatabaseReference databaseRef = FirebaseDatabase.getInstance().getReference("jugadores").child("jugador" + (randomIndex+1));
-
-        databaseRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                String title = dataSnapshot.child("nombre").getValue(String.class);
-                String description = dataSnapshot.child("descripcion").getValue(String.class);
-                String imageUrl = dataSnapshot.child("url_imagen").getValue(String.class);
-
-                titleTextView.setText(title);
-                descriptionTextView.setText(description);
-                Glide.with(DashboardActivity.this).load(imageUrl).into(itemImageView);
-
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        });
+    private void openDetailActivity(Player player) {
+        Intent intent = new Intent(DashboardActivity.this, DetailActivity.class);
+        intent.putExtra("player_name", player.getNombre());
+        intent.putExtra("player_description", player.getDescripcion());
+        intent.putExtra("player_image", player.getUrl_imagen());
+        startActivity(intent);
     }
 }
