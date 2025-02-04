@@ -2,30 +2,63 @@ package com.example.footballplayers.views;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 
 import com.example.footballplayers.R;
+import com.example.footballplayers.viewmodels.LoginViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class LoginActivity extends AppCompatActivity {
-    private FirebaseAuth mAuth;
+
     private EditText emailInput, passwordInput;
+    private LoginViewModel loginViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        mAuth = FirebaseAuth.getInstance();
-
+        // Inicializar vistas
         emailInput = findViewById(R.id.emailInput);
         passwordInput = findViewById(R.id.passwordInput);
 
-        findViewById(R.id.loginButton).setOnClickListener(v -> loginUser());
+        // Crear o obtener el ViewModel
+        loginViewModel = new LoginViewModel(getApplication());
+
+        // Observar cambios en el mensaje de error o éxito
+        loginViewModel.getErrorMessage().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String message) {
+                if (message != null) {
+                    Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                    if (message.equals("Inicio de sesión exitoso")) {
+                        startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                        finish();
+                    }
+                }
+            }
+        });
+        loginViewModel.getNavigateToDashboard().observe(this, shouldNavigate -> {
+            if (shouldNavigate) {
+                startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                finish();
+            }
+        });
+
+        // Configurar los botones
+        findViewById(R.id.loginButton).setOnClickListener(v -> {
+            String email = emailInput.getText().toString();
+            String password = passwordInput.getText().toString();
+
+            if (loginViewModel.validateInputs(email, password)) {
+                loginViewModel.loginUser(email, password);
+            }
+        });
+
         findViewById(R.id.goToRegisterButton).setOnClickListener(v ->
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class)));
     }
@@ -34,30 +67,9 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         // Verificar si el usuario ya está logueado
-        if (mAuth.getCurrentUser() != null) {
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
             startActivity(new Intent(this, DashboardActivity.class));
             finish();
         }
-    }
-
-    private void loginUser() {
-        String email = emailInput.getText().toString();
-        String password = passwordInput.getText().toString();
-
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        mAuth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(task -> {
-                    if (task.isSuccessful()) {
-                        startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
-                        finish();
-                    } else {
-                        Toast.makeText(LoginActivity.this, "Error de autenticación",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
     }
 }
