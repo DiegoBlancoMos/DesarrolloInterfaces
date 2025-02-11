@@ -35,8 +35,29 @@ public class PlayerAdapter extends RecyclerView.Adapter<PlayerAdapter.PlayerView
     @Override
     public void onBindViewHolder(@NonNull PlayerViewHolder holder, int position) {
         Player player = players.get(position);
-        holder.bind(player);
+
+        holder.nameTextView.setText(player.getNombre());
+        holder.descriptionTextView.setText(player.getDescripcion());
+
+        // Cargar imagen con Glide/Picasso
+        Glide.with(holder.itemView.getContext())
+                .load(player.getUrl_imagen())
+                .into(holder.imageView);
+
+        // Añadir descripción accesible para TalkBack
+        if (player.getNombre() != null && !player.getNombre().isEmpty()) {
+            holder.imageView.setContentDescription("Imagen de " + player.getNombre());
+        } else {
+            holder.imageView.setContentDescription("Imagen de jugador desconocido");
+        }
+
+        // Mejorar la accesibilidad de los textos asegurando contraste y legibilidad
+        holder.nameTextView.setContentDescription("Nombre del jugador: " + player.getNombre());
+        holder.descriptionTextView.setContentDescription("Descripción: " + player.getDescripcion());
+
+        holder.itemView.setOnClickListener(v -> listener.onItemClick(player));
     }
+
 
     @Override
     public int getItemCount() {
