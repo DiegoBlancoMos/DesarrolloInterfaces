@@ -1,19 +1,16 @@
 package com.example.footballplayers.repositories;
 
 import androidx.annotation.NonNull;
-
 import com.example.footballplayers.models.Player;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 import java.util.List;
 
 public class DashboardRepository {
-
     private DatabaseReference databaseRef;
 
     public DashboardRepository() {
@@ -39,8 +36,28 @@ public class DashboardRepository {
         });
     }
 
+    public void getPlayerById(String playerId, SinglePlayerCallback callback) {
+        databaseRef.child(playerId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Player player = snapshot.getValue(Player.class);
+                callback.onSuccess(player);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                callback.onFailure(error.toException());
+            }
+        });
+    }
+
     public interface Callback {
         void onSuccess(List<Player> players);
+        void onFailure(Exception e);
+    }
+
+    public interface SinglePlayerCallback {
+        void onSuccess(Player player);
         void onFailure(Exception e);
     }
 }

@@ -24,6 +24,7 @@ public class DashboardActivity extends AppCompatActivity {
     private DashboardViewModel viewModel;
     private FirebaseAuth mAuth;
     private Button logoutButton;
+    private Button favoriteButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,20 +32,23 @@ public class DashboardActivity extends AppCompatActivity {
         setContentView(R.layout.activity_dashboard);
 
         mAuth = FirebaseAuth.getInstance();
+
+        // Inicializar vistas
         recyclerView = findViewById(R.id.recyclerView);
         logoutButton = findViewById(R.id.logoutButton);
+        favoriteButton = findViewById(R.id.favoriteButton);
 
         // Configurar RecyclerView
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Crear el adaptador una sola vez
+        // Crear el adaptador
         playerAdapter = new PlayerAdapter(new ArrayList<>(), this::openDetailActivity);
         recyclerView.setAdapter(playerAdapter);
 
         // Configurar ViewModel
         viewModel = new ViewModelProvider(this).get(DashboardViewModel.class);
 
-        // Observar cambios y actualizar el adaptador existente
+        // Observar cambios
         viewModel.getPlayers().observe(this, players -> {
             if (players != null) {
                 playerAdapter.updatePlayers(players);
@@ -53,6 +57,11 @@ public class DashboardActivity extends AppCompatActivity {
 
         // Cargar los datos
         viewModel.fetchPlayers();
+
+        // Configurar el botón de favoritos
+        favoriteButton.setOnClickListener(v -> {
+            startActivity(new Intent(DashboardActivity.this, FavoritesActivity.class));
+        });
 
         // Configurar logout
         logoutButton.setOnClickListener(v -> {
@@ -69,4 +78,5 @@ public class DashboardActivity extends AppCompatActivity {
         intent.putExtra("player_image", player.getUrl_imagen());
         startActivity(intent);
     }
+
 }
