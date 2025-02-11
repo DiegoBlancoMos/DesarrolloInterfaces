@@ -1,6 +1,8 @@
 package com.example.footballplayers.views;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
@@ -19,6 +21,11 @@ public class FavoritesActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPref = getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
+        boolean isDarkMode = sharedPref.getBoolean("darkMode", false);
+        // Aplicar el tema antes de cargar la interfaz
+        setTheme(isDarkMode ? R.style.ThemeOscuro : R.style.ThemeClaro);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_favorites);
 

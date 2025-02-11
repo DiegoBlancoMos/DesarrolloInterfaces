@@ -1,5 +1,7 @@
 package com.example.footballplayers.views;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -20,8 +22,14 @@ public class DetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPref = getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
+        boolean isDarkMode = sharedPref.getBoolean("darkMode", false);
+        // Aplicar el tema antes de cargar la interfaz
+        setTheme(isDarkMode ? R.style.ThemeOscuro : R.style.ThemeClaro);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
+        // Obtener la configuración de SharedPreferences
 
         nameTextView = findViewById(R.id.nameTextView);
         descriptionTextView = findViewById(R.id.descriptionTextView);

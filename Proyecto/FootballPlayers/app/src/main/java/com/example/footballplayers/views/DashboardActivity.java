@@ -1,6 +1,8 @@
 package com.example.footballplayers.views;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 
@@ -29,6 +31,9 @@ public class DashboardActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SharedPreferences sharedPref = getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
+        boolean isDarkMode = sharedPref.getBoolean("darkMode", false);
+        setTheme(isDarkMode ? R.style.ThemeOscuro : R.style.ThemeClaro);
         setContentView(R.layout.activity_dashboard);
 
         mAuth = FirebaseAuth.getInstance();
@@ -63,6 +68,20 @@ public class DashboardActivity extends AppCompatActivity {
             startActivity(new Intent(DashboardActivity.this, FavoritesActivity.class));
         });
 
+        Button themeButton = findViewById(R.id.themeButton);
+        themeButton.setOnClickListener(view -> {
+            boolean currentDarkMode = sharedPref.getBoolean("darkMode", false);
+
+            SharedPreferences.Editor editor = sharedPref.edit();
+            editor.putBoolean("darkMode", !currentDarkMode);
+            editor.apply();
+
+            // Aplicar el nuevo tema y recargar la actividad
+            setTheme(!currentDarkMode ? R.style.ThemeOscuro : R.style.ThemeClaro);
+            recreate();
+        });
+
+
         // Configurar logout
         logoutButton.setOnClickListener(v -> {
             mAuth.signOut();
@@ -70,7 +89,6 @@ public class DashboardActivity extends AppCompatActivity {
             finish();
         });
     }
-
     private void openDetailActivity(Player player) {
         Intent intent = new Intent(DashboardActivity.this, DetailActivity.class);
         intent.putExtra("player_name", player.getNombre());
