@@ -3,15 +3,16 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground">
 
-    <!-- ScrollView para el contenido -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:fillViewport="true">
+        android:fillViewport="true"
+        android:background="?android:colorBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -19,7 +20,6 @@
             android:orientation="vertical"
             android:padding="16dp">
 
-            <!-- Imagen del jugador -->
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="match_parent"
@@ -27,7 +27,6 @@
                 android:scaleType="centerCrop"
                 android:layout_marginBottom="16dp" />
 
-            <!-- Nombre del jugador -->
             <TextView
                 android:id="@+id/nameTextView"
                 android:layout_width="wrap_content"
@@ -37,7 +36,6 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="8dp" />
 
-            <!-- Descripción del jugador -->
             <TextView
                 android:id="@+id/descriptionTextView"
                 android:layout_width="wrap_content"
@@ -49,7 +47,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <!-- Botón de favorito fijo en la parte inferior derecha -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabFavorite"
         android:layout_width="wrap_content"

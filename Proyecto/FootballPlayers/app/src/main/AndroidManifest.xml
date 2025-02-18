@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         tools:targetApi="31">
         <activity
-            android:name=".views.LoginActivity"
+            android:name=".views.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,22 +23,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".views.MainActivity"
+            android:exported="false">
+        </activity>
+        <activity
             android:name=".views.RegisterActivity"
             android:exported="false">
 
         </activity>
         <activity
-            android:name=".views.DashboardActivity"
-            android:exported="false">
-
-        </activity>
-        <activity
-            android:name=".views.DetailActivity"
-            android:exported="false">
-
-        </activity>
-        <activity
-            android:name=".views.FavoritesActivity"
+            android:name=".views.LoginActivity"
             android:exported="false">
 
         </activity>

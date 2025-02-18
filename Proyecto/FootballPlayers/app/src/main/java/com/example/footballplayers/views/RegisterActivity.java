@@ -45,7 +45,7 @@ public class RegisterActivity extends AppCompatActivity {
                 if (message != null) {
                     Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
                     if (message.equals("Usuario registrado exitosamente")) {
-                        startActivity(new Intent(RegisterActivity.this, DashboardActivity.class));
+                        startActivity(new Intent(RegisterActivity.this, MainActivity.class));
                         finish();
                     }
                 }
