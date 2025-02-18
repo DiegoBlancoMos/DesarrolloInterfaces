@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (message != null) {
                     Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
                     if (message.equals("Inicio de sesión exitoso")) {
-                        startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
                         finish();
                     }
                 }
@@ -51,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
         });
         loginViewModel.getNavigateToDashboard().observe(this, shouldNavigate -> {
             if (shouldNavigate) {
-                startActivity(new Intent(LoginActivity.this, DashboardActivity.class));
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
                 finish();
             }
         });
@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onStart();
         // Verificar si el usuario ya está logueado
         if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-            startActivity(new Intent(this, DashboardActivity.class));
+            startActivity(new Intent(this, MainActivity.class));
             finish();
         }
     }
