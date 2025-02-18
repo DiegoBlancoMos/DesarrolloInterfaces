@@ -1,6 +1,8 @@
 package com.example.footballplayers.views;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -19,7 +21,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences sharedPref = getSharedPreferences("AppConfig", Context.MODE_PRIVATE);
+        boolean isDarkMode = sharedPref.getBoolean("darkMode", false);
+
+        // Aplicar el tema
+        if (isDarkMode) {
+            setTheme(R.style.ThemeOscuro);
+        } else {
+            setTheme(R.style.ThemeClaro);
+        }
+
         super.onCreate(savedInstanceState);
+        getWindow().setBackgroundDrawableResource(isDarkMode ? R.color.dark_background : R.color.light_background);
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
 

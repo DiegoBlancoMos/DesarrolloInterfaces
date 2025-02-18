@@ -88,7 +88,7 @@ public class ProfileFragment extends Fragment {
             editor.putBoolean("darkMode", isChecked);
             editor.apply();
 
-            // Recrear la actividad para aplicar el nuevo tema
+            // Recrear la actividad
             if (getActivity() != null) {
                 getActivity().recreate();
             }

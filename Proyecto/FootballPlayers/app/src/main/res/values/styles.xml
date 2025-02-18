@@ -1,18 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="AppTheme" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">#FFFFFF</item>
-        <item name="colorOnPrimary">#000000</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
     </style>
-    <style name="ThemeClaro" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">#FFFFFF</item>
-        <item name="colorOnPrimary">#000000</item>
+    <!-- Tema Base Claro -->
+    <style name="ThemeClaro" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Colores principales -->
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+
+        <!-- Colores de fondo -->
+        <item name="android:windowBackground">@color/light_background</item>
+        <item name="android:colorBackground">@color/light_background</item>
+
+        <!-- Colores de texto -->
+        <item name="android:textColorPrimary">@color/light_text_primary</item>
+        <item name="android:textColorSecondary">@color/light_text_secondary</item>
+
+        <!-- NavigationView personalización -->
+        <item name="navigationViewStyle">@style/Widget.NavigationView.Light</item>
+
+        <!-- CardView personalización -->
+        <item name="cardViewStyle">@style/Widget.CardView.Light</item>
+
+        <!-- Botones personalizados -->
+        <item name="materialButtonStyle">@style/Widget.Button.Light</item>
+
+        <!-- EditText personalizados -->
+        <item name="textInputStyle">@style/Widget.TextInput.Light</item>
     </style>
 
-    <style name="ThemeOscuro" parent="Theme.MaterialComponents">
-        <item name="colorPrimary">#000000</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
+    <!-- Estilos específicos para el tema claro -->
+    <style name="Widget.NavigationView.Light" parent="Widget.MaterialComponents.NavigationView">
+        <item name="android:background">@color/light_background</item>
+        <item name="itemTextColor">@color/light_text_primary</item>
+        <item name="itemIconTint">@color/primary</item>
     </style>
 
+    <style name="Widget.CardView.Light" parent="Widget.MaterialComponents.CardView">
+        <item name="cardBackgroundColor">@color/light_surface</item>
+        <item name="cardElevation">4dp</item>
+        <item name="contentPadding">16dp</item>
+    </style>
 
+    <style name="Widget.Button.Light" parent="Widget.MaterialComponents.Button">
+        <item name="android:textColor">@color/light_background</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="Widget.TextInput.Light" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/primary</item>
+        <item name="hintTextColor">@color/primary</item>
+    </style>
 </resources>
